@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Ionic.Zip;
 
 namespace RobotService
 {
@@ -20,7 +22,7 @@ namespace RobotService
             _inversionId = Guid.NewGuid();
 
             // TODO how to define the name ???
-            _name = ownerId.ToString() + InversionId.ToString();
+            _name = InversionId.ToString();
             _ownerId = ownerId;
             _request = request;
 
@@ -82,6 +84,7 @@ namespace RobotService
             //string wellId = GetWellId(request).ToString();
             string wellId = Guid.NewGuid().ToString();
             string wellIdFolder = wellId + @"\";
+            string inversionIdFolder = InversionId + @"\";
             //string dateString = DateTime.Now.ToShortDateString() + @"\";
                 
             FileStream targetStream = null;
@@ -92,7 +95,7 @@ namespace RobotService
             }
             
             // do not put request files into input Folder, but its upper level folder 
-            uploadFolder = uploadFolder + wellIdFolder;
+            uploadFolder = uploadFolder + wellIdFolder + inversionIdFolder;
 
             if (!Directory.Exists(uploadFolder))
             {
@@ -135,12 +138,39 @@ namespace RobotService
 
         public bool CheckAccessCode(string accessCode)
         {
-            throw new NotImplementedException();
+            return true;
+            //throw new NotImplementedException();
         }
 
-        public Stream RetrieveFiles()
+
+        public Stream Retrieve()
         {
-            throw new NotImplementedException();
+            Stream targetStream = null;
+            string downloadFolder = @"c:\Inversions\";
+            string wellId = "5b1f5ed5-5bf1-4b52-92fa-b83ff1476ffd";
+            string wellIdFolder = wellId + @"\";
+            string inversionIdFolder = InversionId + @"\";
+
+            downloadFolder = downloadFolder + wellIdFolder + inversionIdFolder + @"Output";
+
+            using (ZipFile zip = new ZipFile())
+            {
+                string[] files = Directory.GetFiles(@"C:\temp");
+                // add all those files to the ProjectX folder in the zip file
+                zip.AddFiles(files, "temp");
+                zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
+                zip.Save(@"c:\inversionId.zip");
+
+                //string[] files = Directory.GetFiles(@"C:\Inversions\af5e2870-7891-4bec-ae7a-6e9ce5e0bf2c\5b1f5ed5-5bf1-4b52-92fa-b83ff1476ffd\Output");
+                //// add all those files to the ProjectX folder in the zip file
+                //zip.AddFiles(files, "temp");
+                //zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
+                //zip.Save("inversionId.zip");
+                ////zip.Save(outputStream);
+            }
+
+            return targetStream;
+
         }
     }
 }

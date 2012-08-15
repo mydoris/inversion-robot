@@ -28,8 +28,9 @@ namespace TestClient.RobotServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/QueryInversion", ReplyAction="http://tempuri.org/IRobotService/QueryInversionResponse")]
         int QueryInversion(System.Guid wellId);
         
+        // CODEGEN: Generating message contract since the wrapper name (RetrieveMessage) of message RetrieveMessage does not match the default value (RetrieveInversion)
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/RetrieveInversion", ReplyAction="http://tempuri.org/IRobotService/RetrieveInversionResponse")]
-        byte[] RetrieveInversion(System.Guid userId, System.Guid inversionId, string accessCode);
+        TestClient.RobotServiceReference.FileDownloadMessage RetrieveInversion(TestClient.RobotServiceReference.RetrieveMessage request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/GetData", ReplyAction="http://tempuri.org/IRobotService/GetDataResponse")]
         string GetData(int value);
@@ -70,6 +71,52 @@ namespace TestClient.RobotServiceReference {
         
         public GuidMessage(System.Guid InversionId) {
             this.InversionId = InversionId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RetrieveMessage", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RetrieveMessage {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string AccessCode;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public System.Guid InversionId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        public System.Guid UserId;
+        
+        public RetrieveMessage() {
+        }
+        
+        public RetrieveMessage(string AccessCode, System.Guid InversionId, System.Guid UserId) {
+            this.AccessCode = AccessCode;
+            this.InversionId = InversionId;
+            this.UserId = UserId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="FileDownloadMessage", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class FileDownloadMessage {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://tempuri.org/")]
+        public string FileName;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public System.IO.Stream FileData;
+        
+        public FileDownloadMessage() {
+        }
+        
+        public FileDownloadMessage(string FileName, System.IO.Stream FileData) {
+            this.FileName = FileName;
+            this.FileData = FileData;
         }
     }
     
@@ -125,8 +172,19 @@ namespace TestClient.RobotServiceReference {
             return base.Channel.QueryInversion(wellId);
         }
         
-        public byte[] RetrieveInversion(System.Guid userId, System.Guid inversionId, string accessCode) {
-            return base.Channel.RetrieveInversion(userId, inversionId, accessCode);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        TestClient.RobotServiceReference.FileDownloadMessage TestClient.RobotServiceReference.IRobotService.RetrieveInversion(TestClient.RobotServiceReference.RetrieveMessage request) {
+            return base.Channel.RetrieveInversion(request);
+        }
+        
+        public string RetrieveInversion(string AccessCode, System.Guid InversionId, System.Guid UserId, out System.IO.Stream FileData) {
+            TestClient.RobotServiceReference.RetrieveMessage inValue = new TestClient.RobotServiceReference.RetrieveMessage();
+            inValue.AccessCode = AccessCode;
+            inValue.InversionId = InversionId;
+            inValue.UserId = UserId;
+            TestClient.RobotServiceReference.FileDownloadMessage retVal = ((TestClient.RobotServiceReference.IRobotService)(this)).RetrieveInversion(inValue);
+            FileData = retVal.FileData;
+            return retVal.FileName;
         }
         
         public string GetData(int value) {

@@ -34,11 +34,14 @@
   <wsdl:message name="IRobotService_QueryInversion_OutputMessage">
     <wsdl:part name="parameters" element="tns:QueryInversionResponse" />
   </wsdl:message>
-  <wsdl:message name="IRobotService_RetrieveInversion_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveInversion" />
+  <wsdl:message name="RetrieveMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMessage" />
   </wsdl:message>
-  <wsdl:message name="IRobotService_RetrieveInversion_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveInversionResponse" />
+  <wsdl:message name="FileDownloadMessage">
+    <wsdl:part name="parameters" element="tns:FileDownloadMessage" />
+  </wsdl:message>
+  <wsdl:message name="FileDownloadMessage_Headers">
+    <wsdl:part name="FileName" element="tns:FileName" />
   </wsdl:message>
   <wsdl:message name="IRobotService_GetData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetData" />
@@ -64,8 +67,8 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IRobotService/QueryInversionResponse" message="tns:IRobotService_QueryInversion_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveInversion">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRobotService/RetrieveInversion" message="tns:IRobotService_RetrieveInversion_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRobotService/RetrieveInversionResponse" message="tns:IRobotService_RetrieveInversion_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IRobotService/RetrieveInversion" name="RetrieveMessage" message="tns:RetrieveMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRobotService/RetrieveInversionResponse" name="FileDownloadMessage" message="tns:FileDownloadMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IRobotService/GetData" message="tns:IRobotService_GetData_InputMessage" />
@@ -113,10 +116,11 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveInversion">
       <soap:operation soapAction="http://tempuri.org/IRobotService/RetrieveInversion" style="document" />
-      <wsdl:input>
+      <wsdl:input name="RetrieveMessage">
         <soap:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
+      <wsdl:output name="FileDownloadMessage">
+        <soap:header message="tns:FileDownloadMessage_Headers" part="FileName" use="literal" />
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

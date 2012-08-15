@@ -57,7 +57,7 @@ namespace RobotService
         /// <param name="accessCode"></param>
         /// <returns></returns>
         [OperationContract]
-        FileDownloadMessage RetrieveInversion(RetrieveMessage retrieveMessage);
+        FileDownloadMessage RetrieveInversion(RetrieveMessage requestrRetrieveMessage);
 
         [OperationContract]
         string GetData(int value);

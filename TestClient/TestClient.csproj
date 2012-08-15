@@ -70,6 +70,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RobotService\RobotService.csproj">
+      <Project>{8DDF2620-79FA-4DE0-AFFB-AE916F67F6F7}</Project>
+      <Name>RobotService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Service References\RobotServiceReference\" />
   </ItemGroup>
   <ItemGroup>

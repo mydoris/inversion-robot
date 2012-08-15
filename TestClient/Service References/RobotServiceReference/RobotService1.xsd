@@ -61,19 +61,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveInversion">
+  <xs:element name="RetrieveMessage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="userId" type="q8:guid" />
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="inversionId" type="q9:guid" />
-        <xs:element minOccurs="0" name="accessCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="AccessCode" nillable="true" type="xs:string" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="InversionId" type="q8:guid" />
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="UserId" type="q9:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveInversionResponse">
+  <xs:element name="FileDownloadMessage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="RetrieveInversionResult" nillable="true" type="xs:base64Binary" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/Message" name="FileData" type="q10:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

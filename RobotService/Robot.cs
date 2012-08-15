@@ -97,8 +97,12 @@ namespace RobotService
             // Add user who can access the inversion into user-inversion dictionary
             UserInversionLookup.Add(retrieveMessage.UserId, inversion);
             FileDownloadMessage fileDownloadMessage = new FileDownloadMessage();
-            fileDownloadMessage.FileName = inversion.Name;
-            fileDownloadMessage.FileData = inversion.RetrieveFiles();
+
+            if (inversion != null)
+            {
+                fileDownloadMessage.FileName = inversion.Name;
+                fileDownloadMessage.FileData = inversion.Retrieve();
+            }
             return fileDownloadMessage;
         }
 

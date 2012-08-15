@@ -63,9 +63,9 @@ namespace RobotService
             return _robot.QueryInversion(wellId);
         }
 
-        public FileDownloadMessage RetrieveInversion(RetrieveMessage retrieveMessage)
+        public FileDownloadMessage RetrieveInversion(RetrieveMessage requestrRetrieveMessage)
         {
-            return _robot.RetrieveInversion(retrieveMessage);
+            return _robot.RetrieveInversion(requestrRetrieveMessage);
         }
     }
 }
