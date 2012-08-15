@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5e19a3e6-9633-499f-81b3-09df88bdbe20" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:3178/RobotService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RobotService.xsd" MetadataType="Schema" ID="1ed1cfb4-37c5-410e-9cc9-03e15ce3b5e3" SourceId="1" SourceUrl="http://localhost:3178/RobotService.svc?xsd=xsd0" />
+    <MetadataFile FileName="RobotService.disco" MetadataType="Disco" ID="8bfbb384-287e-4481-9bea-5ec2fb408b80" SourceId="1" SourceUrl="http://localhost:3178/RobotService.svc?disco" />
+    <MetadataFile FileName="RobotService1.xsd" MetadataType="Schema" ID="55427157-4b28-423f-8855-aec64160bbdf" SourceId="1" SourceUrl="http://localhost:3178/RobotService.svc?xsd=xsd2" />
+    <MetadataFile FileName="RobotService2.xsd" MetadataType="Schema" ID="26985f13-9e7e-4e34-81fa-d01f2d6d09b1" SourceId="1" SourceUrl="http://localhost:3178/RobotService.svc?xsd=xsd4" />
+    <MetadataFile FileName="RobotService3.xsd" MetadataType="Schema" ID="93afd79f-e9e3-4b91-8cb0-20e0b7de73b5" SourceId="1" SourceUrl="http://localhost:3178/RobotService.svc?xsd=xsd3" />
+    <MetadataFile FileName="RobotService4.xsd" MetadataType="Schema" ID="3ebb6027-7d6c-4f1d-91dc-364dc7ffb6e8" SourceId="1" SourceUrl="http://localhost:3178/RobotService.svc?xsd=xsd1" />
+    <MetadataFile FileName="RobotService.wsdl" MetadataType="Wsdl" ID="42a44e99-6ef5-4782-b89e-9f1bc8c7248c" SourceId="1" SourceUrl="http://localhost:3178/RobotService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
