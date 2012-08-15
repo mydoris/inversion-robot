@@ -14,27 +14,38 @@ namespace RobotService
 
         static Robot()
         {
-            _inversions = new List<Inversion>();
-            _userInversionLookup = new Dictionary<Guid, Inversion>();
+            Inversions = new List<Inversion>();
+            UserInversionLookup = new Dictionary<Guid, Inversion>();
+        }
+
+        public static List<Inversion> Inversions
+        {
+            get { return _inversions; }
+            set { _inversions = value; }
+        }
+
+        public static Dictionary<Guid, Inversion> UserInversionLookup
+        {
+            get { return _userInversionLookup; }
+            set { _userInversionLookup = value; }
         }
 
         public Guid InitInversion(Guid ownerId, List<InversionFile> inversionFiles)
         {
             var inversion = InversionFactory.CreateInversion(ownerId, inversionFiles);
-            // Add into inversion list
-            _userInversionLookup.Add(ownerId, inversion);
-            
-            _inversions.Add(inversion);
             // Add into user-inversion Dictionary
-            //_userInversionLookup.Add(ownerId, inversion);
-
+            UserInversionLookup.Add(ownerId, inversion);
+            // Add into inversion list
+            Inversions.Add(inversion);
+            // save the files into input folder
+            inversion.Init();
             return inversion.InversionId;
         }
 
         public bool StartInversion(Guid ownerId, Guid inversionId)
         {
             Inversion inversion = null;
-            foreach (var inv in _inversions.Where(inv => inv.InversionId.Equals(inversionId)))
+            foreach (var inv in Inversions.Where(inv => inv.InversionId.Equals(inversionId)))
             {
                 inversion = inv;
             }
@@ -44,7 +55,7 @@ namespace RobotService
         public bool StopInversion(Guid ownerId, Guid inversionId)
         {
             Inversion inversion = null;
-            foreach (var inv in _inversions)
+            foreach (var inv in Inversions)
             {
                 if (inv.InversionId.Equals(inversionId))
                 {
@@ -56,7 +67,7 @@ namespace RobotService
 
         public int QueryInversion(Guid wellId)
         {
-            var inversionQuery = from inversion in _inversions
+            var inversionQuery = from inversion in Inversions
                                  where inversion.WellId.Equals(wellId)
                                  select inversion;
             //We can return an inversion list here.
@@ -68,7 +79,7 @@ namespace RobotService
         public byte[] RetrieveInversion(Guid userId, Guid inversionId, string accessCode)
         {
             Inversion inversion = null;
-            var inversionQuery = from inv in _inversions
+            var inversionQuery = from inv in Inversions
                                  where inv.InversionId.Equals(inversionId)
                                  select inv;
             foreach (var inv in inversionQuery)
@@ -82,7 +93,7 @@ namespace RobotService
             }
 
             // Add user who can access the inversion into user-inversion dictionary
-            _userInversionLookup.Add(userId, inversion);
+            UserInversionLookup.Add(userId, inversion);
 
             return inversion.RetrieveFiles();
         }
@@ -91,7 +102,7 @@ namespace RobotService
         {
             var users = new List<Guid>();
 
-            var usersQuery = from user in _userInversionLookup
+            var usersQuery = from user in UserInversionLookup
                              where user.Value.InversionId.Equals(inversionId)
                              select user;
 

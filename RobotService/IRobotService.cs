@@ -62,31 +62,36 @@ namespace RobotService
         [OperationContract]
         string GetData(int value);
 
+        //Inversion GetInversion(Guid userId, Guid inversionId, string accessCode);
+        //List<Inversion> GetInversionList(Guid userId, Guid inversionId, string accessCode);
+
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
     }
 
+
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
-    [DataContract]
+    [MessageContract]
     public class InversionFile
     {
         private string _fileName;
         private Stream _fileData;
 
-        [DataMember]
+        [MessageHeader(MustUnderstand = true)]
         public string FileName
         {
             get { return _fileName; }
             set { _fileName = value; }
         }
 
-        [DataMember]
+        [MessageBodyMember(Order = 1)]
         public Stream FileData
         {
             get { return _fileData; }
             set { _fileData = value; }
         }
     }
+
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
     public class CompositeType

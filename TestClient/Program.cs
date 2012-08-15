@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using TestClient.RobotServiceReference;
@@ -16,7 +17,9 @@ namespace TestClient
             var inversionFiles = new List<InversionFile>();
             var inversionFile = new InversionFile();
 
-            inversionFile.FileName = "Sample Name";
+
+            inversionFile.FileName = "bha.xml";
+            inversionFile.FileData = new FileStream(@"C:\ForRobot\bha.xml", FileMode.Open);
             inversionFiles.Add(inversionFile);
 
             Guid ownerId = Guid.NewGuid();
@@ -28,6 +31,7 @@ namespace TestClient
             
             Console.WriteLine(client.StartInversion(ownerId, inversionId));
             Console.WriteLine(client.StopInversion(ownerId, inversionId));
+
 
             // Always close the client.
             client.Close();
