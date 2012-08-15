@@ -11,24 +11,24 @@ namespace RobotService
         private Guid _inversionId;
         private string _name;
         private Guid _ownerId;
-        private List<InversionFile > _inversionFiles;
+        private FileUploadMessage _request;
         private readonly string _accessCode;
         private Guid _wellId;
 
-        public Inversion(Guid ownerId, List<InversionFile> inversionFiles)
+        public Inversion(Guid ownerId, FileUploadMessage request)
         {
             _inversionId = Guid.NewGuid();
 
             // TODO how to define the name ???
             _name = ownerId.ToString() + InversionId.ToString();
             _ownerId = ownerId;
-            _inversionFiles = inversionFiles;
+            _request = request;
 
             // TODO how to generate the accessCode
             _accessCode = Guid.NewGuid().ToString();
 
             // TODO
-            _wellId = GetWellId(inversionFiles);
+            _wellId = GetWellId(request);
         }
 
         public Inversion()
@@ -36,7 +36,7 @@ namespace RobotService
             throw new NotImplementedException();
         }
 
-        private Guid GetWellId(List<InversionFile> inversionFiles)
+        private Guid GetWellId(FileUploadMessage request)
         {
             return Guid.NewGuid();
             //throw new NotImplementedException();
@@ -68,54 +68,56 @@ namespace RobotService
 
         public void Init()
         {
-            init(_inversionFiles);
+            init(_request);
         }
 
-        private void init(List<InversionFile> inversionFiles )
+        private void init(FileUploadMessage request )
         {
-            string uploadFolder = @"c:\Inversion\";
+            string uploadFolder = @"c:\Inversions\";
 
-            foreach (var inversionFile in inversionFiles)
+            string fileName = request.FileName;
+            Stream sourceStream = request.FileData;
+
+            // TODO how to get well ID
+            //string wellId = GetWellId(request).ToString();
+            string wellId = Guid.NewGuid().ToString();
+            string wellIdFolder = wellId + @"\";
+            //string dateString = DateTime.Now.ToShortDateString() + @"\";
+                
+            FileStream targetStream = null;
+
+            if (!sourceStream.CanRead)
             {
-
-                string fileName = inversionFile.FileName;
-                Stream sourceStream = inversionFile.FileData;
-                string inputFolder = @"Input\";
-                //string dateString = DateTime.Now.ToShortDateString() + @"\";
-                
-                FileStream targetStream = null;
-
-                if (!sourceStream.CanRead)
-                {
-                    throw new Exception("Can't read!");
-                }
-                
-                uploadFolder = uploadFolder + inputFolder;
-
-                if (!Directory.Exists(uploadFolder))
-                {
-                    Directory.CreateDirectory(uploadFolder);
-                }
-            
-                string filePath = Path.Combine(uploadFolder, fileName);
-
-                using (targetStream = new FileStream(filePath, FileMode.Create))
-                {
-                    //read from the input stream in 4K chunks
-                    //and save to output stream
-                    const int bufferLen = 4096;
-                    byte[] buffer = new byte[bufferLen];
-                    int count = 0;
-                    while ((count = sourceStream.Read(buffer, 0, bufferLen)) > 0)
-                    {
-                        targetStream.Write(buffer, 0, count);
-                    }
-
-                    //sourceStream.CopyTo(targetStream);
-                    targetStream.Close();
-                    sourceStream.Close();
-                }
+                throw new Exception("Can't read!");
             }
+            
+            // do not put request files into input Folder, but its upper level folder 
+            uploadFolder = uploadFolder + wellIdFolder;
+
+            if (!Directory.Exists(uploadFolder))
+            {
+                Directory.CreateDirectory(uploadFolder);
+            }
+            
+            string filePath = Path.Combine(uploadFolder, fileName);
+
+            using (targetStream = new FileStream(filePath, FileMode.Create))
+            {
+                //read from the input stream in 4K chunks
+                //and save to output stream
+                const int bufferLen = 4096;
+                byte[] buffer = new byte[bufferLen];
+                int count = 0;
+                while ((count = sourceStream.Read(buffer, 0, bufferLen)) > 0)
+                {
+                    targetStream.Write(buffer, 0, count);
+                }
+
+                //sourceStream.CopyTo(targetStream);
+                targetStream.Close();
+                sourceStream.Close();
+            }
+
 
         }
 
@@ -136,7 +138,7 @@ namespace RobotService
             throw new NotImplementedException();
         }
 
-        public byte[] RetrieveFiles()
+        public Stream RetrieveFiles()
         {
             throw new NotImplementedException();
         }

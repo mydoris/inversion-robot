@@ -20,7 +20,7 @@ namespace RobotService
         /// </summary>
         /// <returns>inversionID</returns>
         [OperationContract]
-        Guid InitInversion(Guid ownerId, List<InversionFile> inversionFiles);
+        GuidMessage InitInversion(FileUploadMessage request);
 
         /// <summary>
         /// Start an inversion
@@ -57,7 +57,7 @@ namespace RobotService
         /// <param name="accessCode"></param>
         /// <returns></returns>
         [OperationContract]
-        byte[] RetrieveInversion(Guid userId, Guid inversionId, string accessCode);
+        FileDownloadMessage RetrieveInversion(RetrieveMessage retrieveMessage);
 
         [OperationContract]
         string GetData(int value);
@@ -65,14 +65,14 @@ namespace RobotService
         //Inversion GetInversion(Guid userId, Guid inversionId, string accessCode);
         //List<Inversion> GetInversionList(Guid userId, Guid inversionId, string accessCode);
 
-        [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        //[OperationContract]
+        //CompositeType GetDataUsingDataContract(CompositeType composite);
     }
 
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [MessageContract]
-    public class InversionFile
+    public class FileUploadMessage
     {
         private string _fileName;
         private Stream _fileData;
@@ -92,25 +92,70 @@ namespace RobotService
         }
     }
 
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
-    [DataContract]
-    public class CompositeType
+    [MessageContract]
+    public class FileDownloadMessage
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
+        private string _fileName;
+        private Stream _fileData;
 
-        [DataMember]
-        public bool BoolValue
+        [MessageHeader(MustUnderstand = true)]
+        public string FileName
         {
-            get { return boolValue; }
-            set { boolValue = value; }
+            get { return _fileName; }
+            set { _fileName = value; }
         }
 
-        [DataMember]
-        public string StringValue
+        [MessageBodyMember(Order = 1)]
+        public Stream FileData
         {
-            get { return stringValue; }
-            set { stringValue = value; }
+            get { return _fileData; }
+            set { _fileData = value; }
         }
     }
+
+
+
+    [MessageContract]
+    public class GuidMessage
+    {
+        [MessageBodyMember]
+        public Guid InversionId;
+    }
+
+    [MessageContract]
+    public class RetrieveMessage
+    {
+        [MessageBodyMember]
+        public Guid UserId;
+
+        [MessageBodyMember]
+        public Guid InversionId;
+
+        [MessageBodyMember]
+        public string AccessCode;
+    }
+
+
+
+    // Use a data contract as illustrated in the sample below to add composite types to service operations.
+    //[DataContract]
+    //public class CompositeType
+    //{
+    //    bool boolValue = true;
+    //    string stringValue = "Hello ";
+
+    //    [DataMember]
+    //    public bool BoolValue
+    //    {
+    //        get { return boolValue; }
+    //        set { boolValue = value; }
+    //    }
+
+    //    [DataMember]
+    //    public string StringValue
+    //    {
+    //        get { return stringValue; }
+    //        set { stringValue = value; }
+    //    }
+    //}
 }

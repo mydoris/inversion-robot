@@ -68,15 +68,6 @@
     <None Include="Service References\RobotServiceReference\RobotService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RobotServiceReference\RobotService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RobotServiceReference\RobotService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RobotServiceReference\TestClient.RobotServiceReference.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\RobotServiceReference\" />

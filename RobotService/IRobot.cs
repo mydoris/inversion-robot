@@ -11,7 +11,7 @@ namespace RobotService
         /// Initialize inversion, send settings to Robot
         /// </summary>
         /// <returns>inversionID</returns>
-        Guid InitInversion(Guid ownerId, List<InversionFile> inversionFiles);
+        GuidMessage InitInversion(FileUploadMessage request);
 
         /// <summary>
         /// Start an inversion
@@ -43,6 +43,6 @@ namespace RobotService
         /// <param name="inversionId"></param>
         /// <param name="accessCode" />
         /// <returns></returns>
-        byte[] RetrieveInversion(Guid userId, Guid inversionId, string accessCode);
+        FileDownloadMessage RetrieveInversion(RetrieveMessage retrieveMessage);
     }
 }

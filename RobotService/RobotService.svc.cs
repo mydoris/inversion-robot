@@ -28,24 +28,24 @@ namespace RobotService
             return string.Format("You entered: {0}", value);
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
+        //public CompositeType GetDataUsingDataContract(CompositeType composite)
+        //{
+        //    if (composite == null)
+        //    {
+        //        throw new ArgumentNullException("composite");
+        //    }
+        //    if (composite.BoolValue)
+        //    {
+        //        composite.StringValue += "Suffix";
+        //    }
+        //    return composite;
+        //}
 
-        public Guid InitInversion(Guid ownerId, List<InversionFile> inversionFiles)
+        public GuidMessage InitInversion(FileUploadMessage request)
         {
 
             //return ownerId;
-            return _robot.InitInversion(ownerId, inversionFiles);
+            return _robot.InitInversion(request);
         }
 
         public bool StartInversion(Guid ownerId, Guid inversionId)
@@ -63,9 +63,9 @@ namespace RobotService
             return _robot.QueryInversion(wellId);
         }
 
-        public byte[] RetrieveInversion(Guid userId, Guid inversionId, string accessCode)
+        public FileDownloadMessage RetrieveInversion(RetrieveMessage retrieveMessage)
         {
-            return _robot.RetrieveInversion(userId, inversionId, accessCode);
+            return _robot.RetrieveInversion(retrieveMessage);
         }
     }
 }

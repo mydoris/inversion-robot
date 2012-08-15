@@ -8,7 +8,6 @@ namespace RobotService
     public class Robot : IRobot
     {
         private static List<Inversion> _inversions;
-
         //user-inversion Dictionary
         private static Dictionary<Guid, Inversion> _userInversionLookup;
 
@@ -30,16 +29,19 @@ namespace RobotService
             set { _userInversionLookup = value; }
         }
 
-        public Guid InitInversion(Guid ownerId, List<InversionFile> inversionFiles)
+        public GuidMessage InitInversion(FileUploadMessage request)
         {
-            var inversion = InversionFactory.CreateInversion(ownerId, inversionFiles);
+            var ownerId = Guid.NewGuid();
+            var inversion = InversionFactory.CreateInversion(ownerId, request);
             // Add into user-inversion Dictionary
             UserInversionLookup.Add(ownerId, inversion);
             // Add into inversion list
             Inversions.Add(inversion);
             // save the files into input folder
             inversion.Init();
-            return inversion.InversionId;
+            GuidMessage guidMessage = new GuidMessage();
+            guidMessage.InversionId = inversion.InversionId;
+            return guidMessage;
         }
 
         public bool StartInversion(Guid ownerId, Guid inversionId)
@@ -76,27 +78,30 @@ namespace RobotService
             return inversionQuery.Count();
         }
 
-        public byte[] RetrieveInversion(Guid userId, Guid inversionId, string accessCode)
+        public FileDownloadMessage RetrieveInversion(RetrieveMessage retrieveMessage)
         {
             Inversion inversion = null;
             var inversionQuery = from inv in Inversions
-                                 where inv.InversionId.Equals(inversionId)
+                                 where inv.InversionId.Equals(retrieveMessage.InversionId)
                                  select inv;
             foreach (var inv in inversionQuery)
             {
                 inversion = inv;
             }
 
-            if (inversion != null && !inversion.CheckAccessCode(accessCode))
+            if (inversion != null && !inversion.CheckAccessCode(retrieveMessage.AccessCode))
             {
                 return null;
             }
 
             // Add user who can access the inversion into user-inversion dictionary
-            UserInversionLookup.Add(userId, inversion);
-
-            return inversion.RetrieveFiles();
+            UserInversionLookup.Add(retrieveMessage.UserId, inversion);
+            FileDownloadMessage fileDownloadMessage = new FileDownloadMessage();
+            fileDownloadMessage.FileName = inversion.Name;
+            fileDownloadMessage.FileData = inversion.RetrieveFiles();
+            return fileDownloadMessage;
         }
+
 
         public List<Guid> GetUsersByInversionId(Guid inversionId)
         {
@@ -114,20 +119,5 @@ namespace RobotService
             return users;
         }
         
-    }
-
-    public class InversionFactory
-    {
-        public static Inversion CreateInversion()
-        {
-            Inversion inversion = new Inversion();
-            return inversion;
-        }
-
-        public static Inversion CreateInversion(Guid ownerId, List<InversionFile> inversionFiles)
-        {
-            Inversion inversion = new Inversion(ownerId, inversionFiles);
-            return inversion;
-        }
     }
 }
