@@ -15,7 +15,7 @@ namespace RobotService
         private Guid _ownerId;
         private FileUploadMessage _request;
         private readonly string _accessCode;
-        private Guid _wellId;
+        private Guid _wellId = Guid.Parse("b9913b69-1edc-48e2-bc81-f78c08d9f835");
 
         public Inversion(Guid ownerId, FileUploadMessage request)
         {
@@ -40,8 +40,7 @@ namespace RobotService
 
         private Guid GetWellId(FileUploadMessage request)
         {
-            return Guid.NewGuid();
-            //throw new NotImplementedException();
+            return _wellId;
         }
 
         public Guid InversionId
@@ -73,27 +72,30 @@ namespace RobotService
             init(_request);
         }
 
-        private void init(FileUploadMessage request )
+        private void init(FileUploadMessage request)
+        {
+            string fileName = request.FileName;
+            Stream sourceStream = request.FileData;
+            // TODO How to get well Id ?????????????
+            _wellId = GetWellId(request);
+            SaveStreamToFile(fileName, sourceStream);
+        }
+
+        private void SaveStreamToFile(string fileName, Stream sourceStream)
         {
             string uploadFolder = @"c:\Inversions\";
 
-            string fileName = request.FileName;
-            Stream sourceStream = request.FileData;
-
             // TODO how to get well ID
-            //string wellId = GetWellId(request).ToString();
-            string wellId = Guid.NewGuid().ToString();
-            string wellIdFolder = wellId + @"\";
-            string inversionIdFolder = InversionId + @"\";
-            //string dateString = DateTime.Now.ToShortDateString() + @"\";
-                
+            string wellIdFolder = _wellId + @"\";
+            string inversionIdFolder = _inversionId + @"\";
+
             FileStream targetStream = null;
 
             if (!sourceStream.CanRead)
             {
                 throw new Exception("Can't read!");
             }
-            
+
             // do not put request files into input Folder, but its upper level folder 
             uploadFolder = uploadFolder + wellIdFolder + inversionIdFolder;
 
@@ -101,27 +103,53 @@ namespace RobotService
             {
                 Directory.CreateDirectory(uploadFolder);
             }
-            
+
             string filePath = Path.Combine(uploadFolder, fileName);
 
             using (targetStream = new FileStream(filePath, FileMode.Create))
             {
-                //read from the input stream in 4K chunks
-                //and save to output stream
-                const int bufferLen = 4096;
-                byte[] buffer = new byte[bufferLen];
-                int count = 0;
-                while ((count = sourceStream.Read(buffer, 0, bufferLen)) > 0)
-                {
-                    targetStream.Write(buffer, 0, count);
-                }
-
-                //sourceStream.CopyTo(targetStream);
+                ////read from the input stream in 4K chunks
+                ////and save to output stream
+                //const int bufferLen = 4096;
+                //byte[] buffer = new byte[bufferLen];
+                //int count = 0;
+                //while ((count = sourceStream.Read(buffer, 0, bufferLen)) > 0)
+                //{
+                //    targetStream.Write(buffer, 0, count);
+                //}
+                sourceStream.CopyTo(targetStream);
                 targetStream.Close();
                 sourceStream.Close();
             }
 
+            using (ZipFile zip = ZipFile.Read(filePath))
+            {
+                foreach (ZipEntry e in zip)
+                {
+                    e.Extract(uploadFolder, ExtractExistingFileAction.OverwriteSilently);  // overwrite == true
+                }
+            }
+        }
 
+        public Stream Retrieve()
+        {
+            string downloadFolder = @"c:\Inversions\";
+            string wellIdFolder = _wellId + @"\";
+            string inversionIdFolder = _inversionId + @"\";
+
+            downloadFolder = downloadFolder + wellIdFolder + inversionIdFolder + @"Output\";
+            Stream targetStream = new MemoryStream();
+            using (ZipFile zip = new ZipFile())
+            {
+                string[] files = Directory.GetFiles(downloadFolder);
+                zip.AddFiles(files, "");
+                zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
+                //zip.Save(targetStream);
+                zip.Save(@"C:\ForRobot.zip");
+            }
+            Console.WriteLine(targetStream.Length);
+
+            return targetStream;
         }
 
         public bool Start()
@@ -143,34 +171,6 @@ namespace RobotService
         }
 
 
-        public Stream Retrieve()
-        {
-            Stream targetStream = null;
-            string downloadFolder = @"c:\Inversions\";
-            string wellId = "5b1f5ed5-5bf1-4b52-92fa-b83ff1476ffd";
-            string wellIdFolder = wellId + @"\";
-            string inversionIdFolder = InversionId + @"\";
 
-            downloadFolder = downloadFolder + wellIdFolder + inversionIdFolder + @"Output";
-
-            using (ZipFile zip = new ZipFile())
-            {
-                string[] files = Directory.GetFiles(@"C:\temp");
-                // add all those files to the ProjectX folder in the zip file
-                zip.AddFiles(files, "temp");
-                zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
-                zip.Save(@"c:\inversionId.zip");
-
-                //string[] files = Directory.GetFiles(@"C:\Inversions\af5e2870-7891-4bec-ae7a-6e9ce5e0bf2c\5b1f5ed5-5bf1-4b52-92fa-b83ff1476ffd\Output");
-                //// add all those files to the ProjectX folder in the zip file
-                //zip.AddFiles(files, "temp");
-                //zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
-                //zip.Save("inversionId.zip");
-                ////zip.Save(outputStream);
-            }
-
-            return targetStream;
-
-        }
     }
 }

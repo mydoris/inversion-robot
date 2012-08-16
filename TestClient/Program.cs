@@ -21,42 +21,33 @@ namespace TestClient
             // Use the 'client' variable to call operations on the service.
 
             FileUploadMessage request = new FileUploadMessage();
-            request.FileName = "bha.xml";
-            request.FileData = new FileStream(@"C:\ForRobot\bha.xml", FileMode.Open);
+            request.FileName = "InversionSettings.zip";
+            request.FileData = new FileStream(@"C:\InversionSettings.zip", FileMode.Open);
 
             Guid ownerId = Guid.NewGuid();
-            Console.WriteLine(ownerId.ToString());
+            Console.WriteLine("The ownerId is" + ownerId.ToString());
 
             // return inversionId
             Guid inversionId = client.InitInversion(request.FileName, request.FileData);
-            Console.WriteLine(inversionId);
 
-            Console.WriteLine(client.StartInversion(ownerId, inversionId));
-            Console.WriteLine(client.StopInversion(ownerId, inversionId));
-            Console.WriteLine(inversionId.ToString());
+            Console.WriteLine("The inversionId is " + inversionId);
+            //Console.WriteLine("StartInversion = " + client.StartInversion(ownerId, inversionId));
+            Console.WriteLine("StopInversion = " + client.StopInversion(ownerId, inversionId));
+            Console.WriteLine("The inversionId is " + inversionId);
 
             // the returned Filedata from FileDownloadMessage
-            FileStream targetStream = null;
-            string filePath = Path.Combine(@"C:\ForRobot\", "TRY");
-            //using (targetStream = new FileStream(filePath, FileMode.Create))
-            //{
-                Stream outstream = new FileStream(filePath, FileMode.Create);
-                Console.WriteLine(client.RetrieveInversion("accessCode", inversionId, ownerId, out outstream));
-                //outstream.CopyTo((targetStream));
-                //targetStream.Close();
-            outstream.Close();
-            
-            
-    
+            //string filePath = Path.Combine(@"C:\ForRobot\", "TRY");
+            //Stream myStream = new FileStream(filePath, FileMode.Create);
+            Stream outstream;
+            Console.WriteLine(client.RetrieveInversion("accessCode", Guid.Parse("fcda73db-98f6-4fdf-b599-6dff22be3285"), ownerId, out outstream));
+            //outstream.CopyTo(myStream);
 
-            //Console.WriteLine("Destination length: {0}", outstream.Length.ToString());
-            //using (FileStream source = File.Open(@"c:\data.dat", FileMode.Open))
-            //{
-            //    outstream.CopyTo(source);
-            //}
-            //Console.WriteLine("Destination length: {0}", outstream.Length.ToString());
+            //Console.WriteLine("Destination length: {0}", myStream.Length);
+            ////Console.WriteLine("Destination length: {0}", outstream.Length);
+            //myStream.Close();
+            //outstream.Close();
 
-            // Always close the client.
+            //Always close the client.
             client.Close();
 
             Console.ReadLine();
