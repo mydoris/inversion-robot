@@ -9,6 +9,7 @@ using System.Text;
 namespace RobotService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "RobotService" in code, svc and config file together.
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class RobotService : IRobotService
     {
         private static IRobot _robot;
@@ -23,28 +24,8 @@ namespace RobotService
             _robot = robot;
         }
 
-        public string GetData(int value)
-        {
-            return string.Format("You entered: {0}", value);
-        }
-
-        //public CompositeType GetDataUsingDataContract(CompositeType composite)
-        //{
-        //    if (composite == null)
-        //    {
-        //        throw new ArgumentNullException("composite");
-        //    }
-        //    if (composite.BoolValue)
-        //    {
-        //        composite.StringValue += "Suffix";
-        //    }
-        //    return composite;
-        //}
-
         public GuidMessage InitInversion(FileUploadMessage request)
         {
-
-            //return ownerId;
             return _robot.InitInversion(request);
         }
 

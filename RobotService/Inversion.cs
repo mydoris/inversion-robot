@@ -15,7 +15,7 @@ namespace RobotService
         private Guid _ownerId;
         private FileUploadMessage _request;
         private readonly string _accessCode;
-        private Guid _wellId = Guid.Parse("b9913b69-1edc-48e2-bc81-f78c08d9f835");
+        private Guid _wellId = Guid.Parse("af5e2870-7891-4bec-ae7a-6e9ce5e0bf2c");
 
         public Inversion(Guid ownerId, FileUploadMessage request)
         {
@@ -139,14 +139,15 @@ namespace RobotService
 
             downloadFolder = downloadFolder + wellIdFolder + inversionIdFolder + @"Output\";
             Stream targetStream = new MemoryStream();
-            using (ZipFile zip = new ZipFile())
-            {
-                string[] files = Directory.GetFiles(downloadFolder);
-                zip.AddFiles(files, "");
-                zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
-                //zip.Save(targetStream);
-                zip.Save(@"C:\ForRobot.zip");
-            }
+            //using (ZipFile zip = new ZipFile())
+            //{
+            //    //string[] files = Directory.GetFiles(@"C:\ForRobot");
+            //    string[] files = Directory.GetFiles(downloadFolder);
+            //    zip.AddFiles(files, "");
+            //    zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
+            //    zip.Save(targetStream);
+            //    //zip.Save(@"C:\ForRobot.zip");
+            //}
             Console.WriteLine(targetStream.Length);
 
             return targetStream;

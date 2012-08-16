@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="AaU/6qWxgoln2Iesz2tSMzhmOAE=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="Iv7fsxdkkIRSabjzEfI+HLbNz3A=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IRobotService">
       <properties>
@@ -37,7 +37,7 @@
           <serializedValue>65536</serializedValue>
         </property>
         <property path="/messageEncoding" isComplexType="false" isExplicitlyDefined="true" clrType="System.ServiceModel.WSMessageEncoding, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>Text</serializedValue>
+          <serializedValue>Mtom</serializedValue>
         </property>
         <property path="/proxyAddress" isComplexType="false" isExplicitlyDefined="false" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IRobotService" contract="RobotServiceReference.IRobotService" bindingType="basicHttpBinding" address="http://localhost:3178/RobotService.svc" bindingConfiguration="BasicHttpBinding_IRobotService">
+    <endpoint name="BasicHttpBinding_IRobotService" contract="RobotServiceReference.IRobotService" bindingType="basicHttpBinding" address="http://localhost:3178/RobotService.svc/robotservice" bindingConfiguration="BasicHttpBinding_IRobotService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:3178/RobotService.svc</serializedValue>
+          <serializedValue>http://localhost:3178/RobotService.svc/robotservice</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

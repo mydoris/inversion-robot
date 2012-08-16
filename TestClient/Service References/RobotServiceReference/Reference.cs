@@ -19,21 +19,43 @@ namespace TestClient.RobotServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/InitInversion", ReplyAction="http://tempuri.org/IRobotService/InitInversionResponse")]
         TestClient.RobotServiceReference.GuidMessage InitInversion(TestClient.RobotServiceReference.FileUploadMessage request);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRobotService/InitInversion", ReplyAction="http://tempuri.org/IRobotService/InitInversionResponse")]
+        System.IAsyncResult BeginInitInversion(TestClient.RobotServiceReference.FileUploadMessage request, System.AsyncCallback callback, object asyncState);
+        
+        TestClient.RobotServiceReference.GuidMessage EndInitInversion(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/StartInversion", ReplyAction="http://tempuri.org/IRobotService/StartInversionResponse")]
         bool StartInversion(System.Guid ownerId, System.Guid inversionId);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRobotService/StartInversion", ReplyAction="http://tempuri.org/IRobotService/StartInversionResponse")]
+        System.IAsyncResult BeginStartInversion(System.Guid ownerId, System.Guid inversionId, System.AsyncCallback callback, object asyncState);
+        
+        bool EndStartInversion(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/StopInversion", ReplyAction="http://tempuri.org/IRobotService/StopInversionResponse")]
         bool StopInversion(System.Guid ownerId, System.Guid inversionId);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRobotService/StopInversion", ReplyAction="http://tempuri.org/IRobotService/StopInversionResponse")]
+        System.IAsyncResult BeginStopInversion(System.Guid ownerId, System.Guid inversionId, System.AsyncCallback callback, object asyncState);
+        
+        bool EndStopInversion(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/QueryInversion", ReplyAction="http://tempuri.org/IRobotService/QueryInversionResponse")]
         int QueryInversion(System.Guid wellId);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRobotService/QueryInversion", ReplyAction="http://tempuri.org/IRobotService/QueryInversionResponse")]
+        System.IAsyncResult BeginQueryInversion(System.Guid wellId, System.AsyncCallback callback, object asyncState);
+        
+        int EndQueryInversion(System.IAsyncResult result);
         
         // CODEGEN: Generating message contract since the wrapper name (RetrieveMessage) of message RetrieveMessage does not match the default value (RetrieveInversion)
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/RetrieveInversion", ReplyAction="http://tempuri.org/IRobotService/RetrieveInversionResponse")]
         TestClient.RobotServiceReference.FileDownloadMessage RetrieveInversion(TestClient.RobotServiceReference.RetrieveMessage request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotService/GetData", ReplyAction="http://tempuri.org/IRobotService/GetDataResponse")]
-        string GetData(int value);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IRobotService/RetrieveInversion", ReplyAction="http://tempuri.org/IRobotService/RetrieveInversionResponse")]
+        System.IAsyncResult BeginRetrieveInversion(TestClient.RobotServiceReference.RetrieveMessage request, System.AsyncCallback callback, object asyncState);
+        
+        TestClient.RobotServiceReference.FileDownloadMessage EndRetrieveInversion(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -126,7 +148,139 @@ namespace TestClient.RobotServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class InitInversionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public InitInversionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Guid Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Guid)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class StartInversionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public StartInversionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class StopInversionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public StopInversionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class QueryInversionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public QueryInversionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveInversionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveInversionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.IO.Stream FileData {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.IO.Stream)(this.results[0]));
+            }
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[1]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RobotServiceClient : System.ServiceModel.ClientBase<TestClient.RobotServiceReference.IRobotService>, TestClient.RobotServiceReference.IRobotService {
+        
+        private BeginOperationDelegate onBeginInitInversionDelegate;
+        
+        private EndOperationDelegate onEndInitInversionDelegate;
+        
+        private System.Threading.SendOrPostCallback onInitInversionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginStartInversionDelegate;
+        
+        private EndOperationDelegate onEndStartInversionDelegate;
+        
+        private System.Threading.SendOrPostCallback onStartInversionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginStopInversionDelegate;
+        
+        private EndOperationDelegate onEndStopInversionDelegate;
+        
+        private System.Threading.SendOrPostCallback onStopInversionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginQueryInversionDelegate;
+        
+        private EndOperationDelegate onEndQueryInversionDelegate;
+        
+        private System.Threading.SendOrPostCallback onQueryInversionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveInversionDelegate;
+        
+        private EndOperationDelegate onEndRetrieveInversionDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveInversionCompletedDelegate;
         
         public RobotServiceClient() {
         }
@@ -147,6 +301,16 @@ namespace TestClient.RobotServiceReference {
                 base(binding, remoteAddress) {
         }
         
+        public event System.EventHandler<InitInversionCompletedEventArgs> InitInversionCompleted;
+        
+        public event System.EventHandler<StartInversionCompletedEventArgs> StartInversionCompleted;
+        
+        public event System.EventHandler<StopInversionCompletedEventArgs> StopInversionCompleted;
+        
+        public event System.EventHandler<QueryInversionCompletedEventArgs> QueryInversionCompleted;
+        
+        public event System.EventHandler<RetrieveInversionCompletedEventArgs> RetrieveInversionCompleted;
+        
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         TestClient.RobotServiceReference.GuidMessage TestClient.RobotServiceReference.IRobotService.InitInversion(TestClient.RobotServiceReference.FileUploadMessage request) {
             return base.Channel.InitInversion(request);
@@ -160,16 +324,220 @@ namespace TestClient.RobotServiceReference {
             return retVal.InversionId;
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TestClient.RobotServiceReference.IRobotService.BeginInitInversion(TestClient.RobotServiceReference.FileUploadMessage request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginInitInversion(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginInitInversion(string FileName, System.IO.Stream FileData, System.AsyncCallback callback, object asyncState) {
+            TestClient.RobotServiceReference.FileUploadMessage inValue = new TestClient.RobotServiceReference.FileUploadMessage();
+            inValue.FileName = FileName;
+            inValue.FileData = FileData;
+            return ((TestClient.RobotServiceReference.IRobotService)(this)).BeginInitInversion(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        TestClient.RobotServiceReference.GuidMessage TestClient.RobotServiceReference.IRobotService.EndInitInversion(System.IAsyncResult result) {
+            return base.Channel.EndInitInversion(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.Guid EndInitInversion(System.IAsyncResult result) {
+            TestClient.RobotServiceReference.GuidMessage retVal = ((TestClient.RobotServiceReference.IRobotService)(this)).EndInitInversion(result);
+            return retVal.InversionId;
+        }
+        
+        private System.IAsyncResult OnBeginInitInversion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string FileName = ((string)(inValues[0]));
+            System.IO.Stream FileData = ((System.IO.Stream)(inValues[1]));
+            return this.BeginInitInversion(FileName, FileData, callback, asyncState);
+        }
+        
+        private object[] OnEndInitInversion(System.IAsyncResult result) {
+            System.Guid retVal = this.EndInitInversion(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnInitInversionCompleted(object state) {
+            if ((this.InitInversionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.InitInversionCompleted(this, new InitInversionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void InitInversionAsync(string FileName, System.IO.Stream FileData) {
+            this.InitInversionAsync(FileName, FileData, null);
+        }
+        
+        public void InitInversionAsync(string FileName, System.IO.Stream FileData, object userState) {
+            if ((this.onBeginInitInversionDelegate == null)) {
+                this.onBeginInitInversionDelegate = new BeginOperationDelegate(this.OnBeginInitInversion);
+            }
+            if ((this.onEndInitInversionDelegate == null)) {
+                this.onEndInitInversionDelegate = new EndOperationDelegate(this.OnEndInitInversion);
+            }
+            if ((this.onInitInversionCompletedDelegate == null)) {
+                this.onInitInversionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnInitInversionCompleted);
+            }
+            base.InvokeAsync(this.onBeginInitInversionDelegate, new object[] {
+                        FileName,
+                        FileData}, this.onEndInitInversionDelegate, this.onInitInversionCompletedDelegate, userState);
+        }
+        
         public bool StartInversion(System.Guid ownerId, System.Guid inversionId) {
             return base.Channel.StartInversion(ownerId, inversionId);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginStartInversion(System.Guid ownerId, System.Guid inversionId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginStartInversion(ownerId, inversionId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public bool EndStartInversion(System.IAsyncResult result) {
+            return base.Channel.EndStartInversion(result);
+        }
+        
+        private System.IAsyncResult OnBeginStartInversion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid ownerId = ((System.Guid)(inValues[0]));
+            System.Guid inversionId = ((System.Guid)(inValues[1]));
+            return this.BeginStartInversion(ownerId, inversionId, callback, asyncState);
+        }
+        
+        private object[] OnEndStartInversion(System.IAsyncResult result) {
+            bool retVal = this.EndStartInversion(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnStartInversionCompleted(object state) {
+            if ((this.StartInversionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.StartInversionCompleted(this, new StartInversionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void StartInversionAsync(System.Guid ownerId, System.Guid inversionId) {
+            this.StartInversionAsync(ownerId, inversionId, null);
+        }
+        
+        public void StartInversionAsync(System.Guid ownerId, System.Guid inversionId, object userState) {
+            if ((this.onBeginStartInversionDelegate == null)) {
+                this.onBeginStartInversionDelegate = new BeginOperationDelegate(this.OnBeginStartInversion);
+            }
+            if ((this.onEndStartInversionDelegate == null)) {
+                this.onEndStartInversionDelegate = new EndOperationDelegate(this.OnEndStartInversion);
+            }
+            if ((this.onStartInversionCompletedDelegate == null)) {
+                this.onStartInversionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnStartInversionCompleted);
+            }
+            base.InvokeAsync(this.onBeginStartInversionDelegate, new object[] {
+                        ownerId,
+                        inversionId}, this.onEndStartInversionDelegate, this.onStartInversionCompletedDelegate, userState);
         }
         
         public bool StopInversion(System.Guid ownerId, System.Guid inversionId) {
             return base.Channel.StopInversion(ownerId, inversionId);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginStopInversion(System.Guid ownerId, System.Guid inversionId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginStopInversion(ownerId, inversionId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public bool EndStopInversion(System.IAsyncResult result) {
+            return base.Channel.EndStopInversion(result);
+        }
+        
+        private System.IAsyncResult OnBeginStopInversion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid ownerId = ((System.Guid)(inValues[0]));
+            System.Guid inversionId = ((System.Guid)(inValues[1]));
+            return this.BeginStopInversion(ownerId, inversionId, callback, asyncState);
+        }
+        
+        private object[] OnEndStopInversion(System.IAsyncResult result) {
+            bool retVal = this.EndStopInversion(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnStopInversionCompleted(object state) {
+            if ((this.StopInversionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.StopInversionCompleted(this, new StopInversionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void StopInversionAsync(System.Guid ownerId, System.Guid inversionId) {
+            this.StopInversionAsync(ownerId, inversionId, null);
+        }
+        
+        public void StopInversionAsync(System.Guid ownerId, System.Guid inversionId, object userState) {
+            if ((this.onBeginStopInversionDelegate == null)) {
+                this.onBeginStopInversionDelegate = new BeginOperationDelegate(this.OnBeginStopInversion);
+            }
+            if ((this.onEndStopInversionDelegate == null)) {
+                this.onEndStopInversionDelegate = new EndOperationDelegate(this.OnEndStopInversion);
+            }
+            if ((this.onStopInversionCompletedDelegate == null)) {
+                this.onStopInversionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnStopInversionCompleted);
+            }
+            base.InvokeAsync(this.onBeginStopInversionDelegate, new object[] {
+                        ownerId,
+                        inversionId}, this.onEndStopInversionDelegate, this.onStopInversionCompletedDelegate, userState);
+        }
+        
         public int QueryInversion(System.Guid wellId) {
             return base.Channel.QueryInversion(wellId);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginQueryInversion(System.Guid wellId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginQueryInversion(wellId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public int EndQueryInversion(System.IAsyncResult result) {
+            return base.Channel.EndQueryInversion(result);
+        }
+        
+        private System.IAsyncResult OnBeginQueryInversion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid wellId = ((System.Guid)(inValues[0]));
+            return this.BeginQueryInversion(wellId, callback, asyncState);
+        }
+        
+        private object[] OnEndQueryInversion(System.IAsyncResult result) {
+            int retVal = this.EndQueryInversion(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnQueryInversionCompleted(object state) {
+            if ((this.QueryInversionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.QueryInversionCompleted(this, new QueryInversionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void QueryInversionAsync(System.Guid wellId) {
+            this.QueryInversionAsync(wellId, null);
+        }
+        
+        public void QueryInversionAsync(System.Guid wellId, object userState) {
+            if ((this.onBeginQueryInversionDelegate == null)) {
+                this.onBeginQueryInversionDelegate = new BeginOperationDelegate(this.OnBeginQueryInversion);
+            }
+            if ((this.onEndQueryInversionDelegate == null)) {
+                this.onEndQueryInversionDelegate = new EndOperationDelegate(this.OnEndQueryInversion);
+            }
+            if ((this.onQueryInversionCompletedDelegate == null)) {
+                this.onQueryInversionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnQueryInversionCompleted);
+            }
+            base.InvokeAsync(this.onBeginQueryInversionDelegate, new object[] {
+                        wellId}, this.onEndQueryInversionDelegate, this.onQueryInversionCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -187,8 +555,72 @@ namespace TestClient.RobotServiceReference {
             return retVal.FileName;
         }
         
-        public string GetData(int value) {
-            return base.Channel.GetData(value);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TestClient.RobotServiceReference.IRobotService.BeginRetrieveInversion(TestClient.RobotServiceReference.RetrieveMessage request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveInversion(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginRetrieveInversion(string AccessCode, System.Guid InversionId, System.Guid UserId, System.AsyncCallback callback, object asyncState) {
+            TestClient.RobotServiceReference.RetrieveMessage inValue = new TestClient.RobotServiceReference.RetrieveMessage();
+            inValue.AccessCode = AccessCode;
+            inValue.InversionId = InversionId;
+            inValue.UserId = UserId;
+            return ((TestClient.RobotServiceReference.IRobotService)(this)).BeginRetrieveInversion(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        TestClient.RobotServiceReference.FileDownloadMessage TestClient.RobotServiceReference.IRobotService.EndRetrieveInversion(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveInversion(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public string EndRetrieveInversion(System.IAsyncResult result, out System.IO.Stream FileData) {
+            TestClient.RobotServiceReference.FileDownloadMessage retVal = ((TestClient.RobotServiceReference.IRobotService)(this)).EndRetrieveInversion(result);
+            FileData = retVal.FileData;
+            return retVal.FileName;
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveInversion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string AccessCode = ((string)(inValues[0]));
+            System.Guid InversionId = ((System.Guid)(inValues[1]));
+            System.Guid UserId = ((System.Guid)(inValues[2]));
+            return this.BeginRetrieveInversion(AccessCode, InversionId, UserId, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveInversion(System.IAsyncResult result) {
+            System.IO.Stream FileData = this.GetDefaultValueForInitialization<System.IO.Stream>();
+            string retVal = this.EndRetrieveInversion(result, out FileData);
+            return new object[] {
+                    FileData,
+                    retVal};
+        }
+        
+        private void OnRetrieveInversionCompleted(object state) {
+            if ((this.RetrieveInversionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveInversionCompleted(this, new RetrieveInversionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveInversionAsync(string AccessCode, System.Guid InversionId, System.Guid UserId) {
+            this.RetrieveInversionAsync(AccessCode, InversionId, UserId, null);
+        }
+        
+        public void RetrieveInversionAsync(string AccessCode, System.Guid InversionId, System.Guid UserId, object userState) {
+            if ((this.onBeginRetrieveInversionDelegate == null)) {
+                this.onBeginRetrieveInversionDelegate = new BeginOperationDelegate(this.OnBeginRetrieveInversion);
+            }
+            if ((this.onEndRetrieveInversionDelegate == null)) {
+                this.onEndRetrieveInversionDelegate = new EndOperationDelegate(this.OnEndRetrieveInversion);
+            }
+            if ((this.onRetrieveInversionCompletedDelegate == null)) {
+                this.onRetrieveInversionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveInversionCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveInversionDelegate, new object[] {
+                        AccessCode,
+                        InversionId,
+                        UserId}, this.onEndRetrieveInversionDelegate, this.onRetrieveInversionCompletedDelegate, userState);
         }
     }
 }
