@@ -16,6 +16,8 @@ namespace TestClient
     {
         static void Main(string[] args)
         {
+            System.Net.ServicePointManager.Expect100Continue = false;
+
             RobotServiceClient client = new RobotServiceClient();
 
             // Use the 'client' variable to call operations on the service.
@@ -35,18 +37,19 @@ namespace TestClient
             Console.WriteLine("StopInversion = " + client.StopInversion(ownerId, inversionId));
             Console.WriteLine("The inversionId is " + inversionId);
 
-            // the returned Filedata from FileDownloadMessage
-            //string filePath = Path.Combine(@"C:\ForRobot\", "TRY");
-            //Stream myStream = new FileStream(filePath, FileMode.Create);
-            Stream outstream;
-            Console.WriteLine(client.RetrieveInversion("accessCode", Guid.Parse("fcda73db-98f6-4fdf-b599-6dff22be3285"), ownerId, out outstream));
-            //outstream.CopyTo(myStream);
-
-            //Console.WriteLine("Destination length: {0}", myStream.Length);
-            ////Console.WriteLine("Destination length: {0}", outstream.Length);
-            //myStream.Close();
-            //outstream.Close();
-
+            // outstream is the returned Filedata from FileDownloadMessage
+            try
+            {
+                Stream outstream;
+                Console.WriteLine(client.RetrieveInversion("accessCode", Guid.Parse("fcda73db-98f6-4fdf-b599-6dff22be3285"), ownerId, out outstream));
+                Console.WriteLine("Destination length: {0}", outstream.Length);
+                outstream.Close();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
             //Always close the client.
             client.Close();
 
