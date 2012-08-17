@@ -32,20 +32,18 @@ namespace TestClient
             Guid inversionId = client.InitInversion(request.FileName, request.FileData);
 
             Console.WriteLine("The inversionId is " + inversionId);
-            //Console.WriteLine("StartInversion = " + client.StartInversion(ownerId, inversionId));
-            
+            Console.WriteLine("StartInversion = " + client.StartInversion(ownerId, inversionId));
+            Console.WriteLine("StopInversion = " + client.StopInversion(ownerId, inversionId));
             Console.WriteLine("The inversionId is " + inversionId);
 
             // the returned Filedata from FileDownloadMessage
             //string filePath = Path.Combine(@"C:\ForRobot\", "TRY");
             //Stream myStream = new FileStream(filePath, FileMode.Create);
             Stream outstream;
-            Console.WriteLine(client.RetrieveInversion("accessCode", Guid.Parse("5b1f5ed5-5bf1-4b52-92fa-b83ff1476ffd"), ownerId, out outstream));
+            Console.WriteLine(client.RetrieveInversion("accessCode", Guid.Parse("28f84ebb-772e-4f52-800e-f02aba25f365"), ownerId, out outstream));
             //outstream.CopyTo(myStream);
-            Thread.Sleep(10000);
-            Console.WriteLine("StopInversion = " + client.StopInversion(ownerId, inversionId));
-            //Console.WriteLine("Destination length: {0}", myStream.Length);
-            ////Console.WriteLine("Destination length: {0}", outstream.Length);
+            Console.WriteLine("Returned outstream: {0}", outstream.GetHashCode());
+
             //myStream.Close();
             //outstream.Close();
 

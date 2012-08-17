@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -103,6 +104,9 @@ namespace RobotService
                 fileDownloadMessage.FileName = inversion.Name;
                 fileDownloadMessage.FileData = inversion.Retrieve();
             }
+
+            fileDownloadMessage.FileName = "Filename: aaaa";
+            fileDownloadMessage.FileData = new MemoryStream();
             return fileDownloadMessage;
         }
 
