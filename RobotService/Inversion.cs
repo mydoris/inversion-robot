@@ -155,18 +155,20 @@ namespace RobotService
                 //zip.Save(targetStream);
                 zip.Save(@"C:\OutputTest.zip");
             }
+            
+            Stream fileStream = new FileStream(@"C:\OutputTest.zip", FileMode.Open, FileAccess.Read);
 
-            using (ZipFile zip = new ZipFile())
-            {
-                string[] files = Directory.GetFiles(downloadFolder);
-                zip.AddFiles(files, "");
-                zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
-                zip.Save(targetStream);
-                //zip.Save(@"C:\ForRobot.zip");
-            }
-            Console.WriteLine("target stream from Retrieve method" + targetStream.Length);
+            //using (ZipFile zip = new ZipFile())
+            //{
+            //    string[] files = Directory.GetFiles(downloadFolder);
+            //    zip.AddFiles(files, "");
+            //    zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
+            //    zip.Save(targetStream);
+            //    //zip.Save(@"C:\ForRobot.zip");
+            //}
+            //Console.WriteLine("target stream from Retrieve method" + targetStream.Length);
 
-            return targetStream;
+            return fileStream;
         }
 
         private static void GenerateRandomFilesInDirectory(string downloadFolder)

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Ionic.Zip;
 using RobotService;
 using TestClient.RobotServiceReference;
 using FileDownloadMessage = RobotService.FileDownloadMessage;
@@ -40,6 +41,7 @@ namespace TestClient
             string filePath = Path.Combine(@"C:\", "InversionResult.zip");
             Stream myStream;
             Stream outstream;
+            Stream memoryStream = new MemoryStream();
             Console.WriteLine(client.RetrieveInversion("accessCode", inversionId, ownerId, out outstream));
 
             using (myStream = new FileStream(filePath, FileMode.Create))
@@ -49,18 +51,32 @@ namespace TestClient
                 //const int bufferLen = 4096;
                 //byte[] buffer = new byte[bufferLen];
                 //int count = 0;
-                //while ((count = sourceStream.Read(buffer, 0, bufferLen)) > 0)
+                //while ((count = outstream.Read(buffer, 0, bufferLen)) > 0)
                 //{
-                //    targetStream.Write(buffer, 0, count);
+                //    myStream.Write(buffer, 0, count);
                 //}
-                outstream.CopyTo(myStream);
+                outstream.CopyTo(memoryStream);
+                memoryStream.CopyTo(myStream);
+                
+                //using (ZipFile zip = ZipFile.Read(myStream))
+                //{
+                //    foreach (ZipEntry entry in zip)
+                //    {
+                //        entry.Extract();
+                //    }
+                //    //ZipEntry entry = zip["NameOfEntryInArchive.doc"];
+                //    //entry.Extract();  // create filesystem file here. 
+                //}
+
+
+                Console.WriteLine("Returned outstream: {0}", outstream.GetType());
+                Console.WriteLine("Returned myStream: {0}", myStream.GetType());
+                Console.WriteLine("Returned memoryStream: {0}", memoryStream.GetType());
                 outstream.Close();
                 myStream.Close();
+                memoryStream.Close();
             }
-
-            Console.WriteLine("Returned outstream: {0}", outstream.Length);
-            Console.WriteLine("Returned myStream: {0}", myStream.Length);
-
+            
             //Always close the client.
             client.Close();
 
