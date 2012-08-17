@@ -104,9 +104,8 @@ namespace RobotService
                 fileDownloadMessage.FileName = inversion.Name;
                 fileDownloadMessage.FileData = inversion.Retrieve();
             }
-
-            fileDownloadMessage.FileName = "Filename: aaaa";
-            fileDownloadMessage.FileData = new MemoryStream();
+            //fileDownloadMessage.FileName = "Filename: aaaa";
+            //fileDownloadMessage.FileData = new MemoryStream();
             return fileDownloadMessage;
         }
 

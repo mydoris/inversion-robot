@@ -37,15 +37,29 @@ namespace TestClient
             Console.WriteLine("The inversionId is " + inversionId);
 
             // the returned Filedata from FileDownloadMessage
-            //string filePath = Path.Combine(@"C:\ForRobot\", "TRY");
-            //Stream myStream = new FileStream(filePath, FileMode.Create);
+            string filePath = Path.Combine(@"C:\", "InversionResult.zip");
+            Stream myStream;
             Stream outstream;
-            Console.WriteLine(client.RetrieveInversion("accessCode", Guid.Parse("28f84ebb-772e-4f52-800e-f02aba25f365"), ownerId, out outstream));
-            //outstream.CopyTo(myStream);
-            Console.WriteLine("Returned outstream: {0}", outstream.GetHashCode());
+            Console.WriteLine(client.RetrieveInversion("accessCode", inversionId, ownerId, out outstream));
 
-            //myStream.Close();
-            //outstream.Close();
+            using (myStream = new FileStream(filePath, FileMode.Create))
+            {
+                ////read from the input stream in 4K chunks
+                ////and save to output stream
+                //const int bufferLen = 4096;
+                //byte[] buffer = new byte[bufferLen];
+                //int count = 0;
+                //while ((count = sourceStream.Read(buffer, 0, bufferLen)) > 0)
+                //{
+                //    targetStream.Write(buffer, 0, count);
+                //}
+                outstream.CopyTo(myStream);
+                outstream.Close();
+                myStream.Close();
+            }
+
+            Console.WriteLine("Returned outstream: {0}", outstream.Length);
+            Console.WriteLine("Returned myStream: {0}", myStream.Length);
 
             //Always close the client.
             client.Close();

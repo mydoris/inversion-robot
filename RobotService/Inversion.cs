@@ -89,22 +89,23 @@ namespace RobotService
             string wellIdFolder = _wellId + @"\";
             string inversionIdFolder = _inversionId + @"\";
 
-            FileStream targetStream = null;
-
-            if (!sourceStream.CanRead)
-            {
-                throw new Exception("Can't read!");
-            }
-
             // do not put request files into input Folder, but its upper level folder 
             uploadFolder = uploadFolder + wellIdFolder + inversionIdFolder;
 
             if (!Directory.Exists(uploadFolder))
             {
                 Directory.CreateDirectory(uploadFolder);
+                Directory.CreateDirectory(uploadFolder + @"Input\");
+                Directory.CreateDirectory(uploadFolder + @"Output\");
             }
 
             string filePath = Path.Combine(uploadFolder, fileName);
+
+            FileStream targetStream = null;
+            if (!sourceStream.CanRead)
+            {
+                throw new Exception("Can't read!");
+            }
 
             using (targetStream = new FileStream(filePath, FileMode.Create))
             {
@@ -136,21 +137,62 @@ namespace RobotService
             string downloadFolder = @"c:\Inversions\";
             string wellIdFolder = _wellId + @"\";
             string inversionIdFolder = _inversionId + @"\";
-
             downloadFolder = downloadFolder + wellIdFolder + inversionIdFolder + @"Output\";
+
+            // Generate 100 files for test
+            for (int i = 0; i < 100; i++)
+            {
+                GenerateRandomFilesInDirectory(downloadFolder);
+            }
+            
             Stream targetStream = new MemoryStream();
-            //using (ZipFile zip = new ZipFile())
-            //{
-            //    //string[] files = Directory.GetFiles(@"C:\ForRobot");
-            //    string[] files = Directory.GetFiles(downloadFolder);
-            //    zip.AddFiles(files, "");
-            //    zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
-            //    zip.Save(targetStream);
-            //    //zip.Save(@"C:\ForRobot.zip");
-            //}
-            Console.WriteLine(targetStream.Length);
+            
+            using (ZipFile zip = new ZipFile())
+            {
+                string[] files = Directory.GetFiles(downloadFolder);
+                zip.AddFiles(files, "");
+                zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
+                //zip.Save(targetStream);
+                zip.Save(@"C:\OutputTest.zip");
+            }
+
+            using (ZipFile zip = new ZipFile())
+            {
+                string[] files = Directory.GetFiles(downloadFolder);
+                zip.AddFiles(files, "");
+                zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G");
+                zip.Save(targetStream);
+                //zip.Save(@"C:\ForRobot.zip");
+            }
+            Console.WriteLine("target stream from Retrieve method" + targetStream.Length);
 
             return targetStream;
+        }
+
+        private static void GenerateRandomFilesInDirectory(string downloadFolder)
+        {
+            string activeDir = downloadFolder;
+            //Create a new subfolder under the current active folder 
+            //string newPath = System.IO.Path.Combine(activeDir, "Output");
+            string newFileName = System.IO.Path.GetRandomFileName();
+
+            // Combine the new file name with the path
+            activeDir = System.IO.Path.Combine(activeDir, newFileName);
+
+            // Create the file and write to it. 
+            // DANGER: System.IO.File.Create will overwrite the file 
+            // if it already exists. This can occur even with 
+            // random file names. 
+            if (!System.IO.File.Exists(activeDir))
+            {
+                using (System.IO.FileStream fs = System.IO.File.Create(activeDir))
+                {
+                    for (byte i = 0; i < 100; i++)
+                    {
+                        fs.WriteByte(i);
+                    }
+                }
+            }
         }
 
         public bool Start()

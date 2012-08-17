@@ -2,7 +2,7 @@ using System;
 
 namespace RobotService
 {
-    public class InversionFactory
+    static public class InversionFactory
     {
         public static Inversion CreateInversion()
         {
