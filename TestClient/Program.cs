@@ -43,10 +43,13 @@ namespace TestClient
             Stream outstream;
             Stream memoryStream = new MemoryStream();
             Console.WriteLine(client.RetrieveInversion("accessCode", inversionId, ownerId, out outstream));
+            
+            outstream.CopyTo(memoryStream);
 
-            using (myStream = new FileStream(filePath, FileMode.Create))
-            {
-                ////read from the input stream in 4K chunks
+
+            //using (myStream = new FileStream(filePath, FileMode.Create))
+            //{
+            //    ////read from the input stream in 4K chunks
                 ////and save to output stream
                 //const int bufferLen = 4096;
                 //byte[] buffer = new byte[bufferLen];
@@ -55,8 +58,8 @@ namespace TestClient
                 //{
                 //    myStream.Write(buffer, 0, count);
                 //}
-                outstream.CopyTo(memoryStream);
-                memoryStream.CopyTo(myStream);
+                
+               // memoryStream.CopyTo(myStream);
                 
                 //using (ZipFile zip = ZipFile.Read(myStream))
                 //{
@@ -70,12 +73,26 @@ namespace TestClient
 
 
                 Console.WriteLine("Returned outstream: {0}", outstream.GetType());
-                Console.WriteLine("Returned myStream: {0}", myStream.GetType());
-                Console.WriteLine("Returned memoryStream: {0}", memoryStream.GetType());
+                //Console.WriteLine("Returned myStream: {0}", myStream.GetType());
+                Console.WriteLine("Returned memoryStream: {0}", memoryStream.Length);
+
+
+
+            Stream fileStream = new FileStream(filePath, FileMode.Create);
+            memoryStream.CopyTo(fileStream);
+
+
+
                 outstream.Close();
-                myStream.Close();
+
+               // myStream.Close();
                 memoryStream.Close();
+
+            if( outstream == memoryStream)
+            {
+                Console.WriteLine("11111111111111");
             }
+            //}
             
             //Always close the client.
             client.Close();
